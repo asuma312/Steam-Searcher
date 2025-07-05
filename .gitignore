@@ -1,0 +1,7 @@
+/app/db/db_filex
+.env
+/.venv
+/instance
+.idea/
+*.pyc
+/app/db/db_files
