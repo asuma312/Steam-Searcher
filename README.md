@@ -1,112 +1,112 @@
 # 🎮 Steam Game Explorer & Recommender
 
-Um sistema inteligente de recomendação de jogos da Steam usando **Processamento de Linguagem Natural (PLN)** e **Recuperação Aumentada por Geração (RAG)**. Coleta dados da Steam, armazena em **DuckDB** e permite buscas semânticas com linguagem natural.
+An intelligent recommendation system for Steam games using **Natural Language Processing (NLP)** and **Retrieval-Augmented Generation (RAG)**. It collects data from Steam, stores it in **DuckDB**, and allows users to search for games using natural language.
 
 ---
 
-## 🔧 Funcionalidades Principais
+## 🔧 Main Features
 
-- 🔍 **Coleta de Dados da Steam**: Obtém informações detalhadas sobre jogos disponíveis na Steam.
-- 🗃️ **Armazenamento com DuckDB**: Armazena eficientemente os dados localmente.
-- 🤖 **Sistema de Recomendação RAGs**: Utiliza embeddings e LLMs para oferecer sugestões com base em descrições fornecidas.
-- 💬 **Interface Natural**: Busque jogos com perguntas do tipo: "quero um jogo de estratégia medieval com elementos de RPG".
+- 🔍 **Steam Data Collection**: Retrieves detailed information about games available on the Steam platform.
+- 🗃️ **DuckDB Storage**: Efficiently stores the collected data locally.
+- 🤖 **RAG-Based Recommendation System**: Uses embeddings and LLMs to suggest games based on user-provided descriptions.
+- 💬 **Natural Language Interface**: Enables users to search for games with prompts like: “I want a medieval strategy game with RPG elements.”
 
 ---
 
-## 📦 Pré-requisitos
+## 📦 Prerequisites
 
-Certifique-se de ter:
+Make sure you have:
 
 - Python `3.7+`
 
 ---
 
-## 🚀 Instalação
+## 🚀 Installation
 
-1. **Clone o repositório:**
+1. **Clone the repository:**
 
 ```bash
-git clone <url_do_seu_repositorio>
+git clone <your_repository_url>
 cd steam-game-explorer-recommender
 ```
 
-2. **Crie e ative um ambiente virtual:**
+2. **Create and activate a virtual environment:**
 
 ```bash
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-3. **Instale as dependências:**
+3. **Install the dependencies:**
 
 ```bash
 pip install -r requirements.txt
 ```
+
 ---
 
-## ⚙️ Uso
+## ⚙️ Usage
 
-### 1. Coletar e armazenar dados da Steam
+### 1. Collect and store Steam data
 
-Execute:
+Run:
 
 ```bash
 python app/services/routiones.py
 ```
 
-Isso irá coletar informações como título, descrição e tags de jogos da Steam, salvando em `app/db/db_files/steam-searcher.duckdb`.
+This will collect game information such as title, description, and tags from Steam and save it to `app/db/db_files/steam-searcher.duckdb`.
 
 ---
 
-### TODO: Configurar o Sistema RAGs
+### TODO: Configure the RAG System
 
+> This section is still under development.
 
 ---
 
-### Objetivo final:
+### Final Goal
 
-Após os dados e embeddings estarem prontos:
+Once the data and embeddings are ready:
 
 ```bash
 python main.py
 ```
 
-O sistema entrará no modo de consulta interativa:
+The system will enter interactive query mode:
 
 ```
-Bem-vindo ao Steam Game Explorer & Recommender!
-Digite sua consulta (ou 'sair' para encerrar):
+Welcome to Steam Game Explorer & Recommender!
+Enter your query (or 'exit' to quit):
 
-Você: quero um jogo de estratégia medieval com elementos de RPG
+You: I want a medieval strategy game with RPG elements
 ```
 
-Resultados esperados:
+Expected results:
 
 ```
-Sugestões:
-1. Crusader Kings III: Um jogo épico de estratégia de dinastia ambientado na Idade Média, com fortes elementos de RPG.
-2. Mount & Blade II: Bannerlord: Mergulhe em um mundo medieval de fantasia com combate realista, gerenciamento de reino e oportunidades de RPG.
-3. Total War: Medieval II: Experimente batalhas épicas em larga escala e gerenciamento estratégico em um cenário medieval detalhado.
+Suggestions:
+1. Crusader Kings III: An epic medieval dynasty strategy game with strong RPG elements.
+2. Mount & Blade II: Bannerlord: Dive into a medieval fantasy world with realistic combat, kingdom management, and RPG opportunities.
+3. Total War: Medieval II: Experience epic large-scale battles and strategic management in a detailed medieval setting.
 ```
-
-
 
 ---
 
-## 🤝 Como Contribuir
+## 🤝 Contributing
 
-Sinta-se à vontade para contribuir! Você pode:
+Feel free to contribute! You can:
 
-- Melhorar a coleta de dados
-- Otimizar performance das consultas
-- Testar novos modelos de embedding e LLMs
-- Adicionar filtros (gênero, preço, etc.)
-- Melhorar a interface
+- Improve Steam data collection
+- Optimize query performance
+- Experiment with different embedding models and LLMs
+- Add filters (genre, price, etc.)
+- Improve the user interface
 
-Envie um Pull Request com suas melhorias 🚀
+Submit a Pull Request with your improvements 🚀
 
 ---
 
-## 📄 Licença
+## 📄 License
 
-Este projeto está licenciado sob a **Licença MIT**.
+This project is licensed under the **MIT License**.
