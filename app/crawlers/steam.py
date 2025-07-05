@@ -56,3 +56,7 @@ class Crawler:
                 response = AppIdResponse.from_dict(data)
                 logger.info(f"Total apps found: {len(response.applist.apps)}")
                 return response
+if __name__ == '__main__':
+    crawler = Crawler()
+    x = asyncio.run(crawler.get_app_detail('428020'))
+    print(x)

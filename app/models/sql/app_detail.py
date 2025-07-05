@@ -21,9 +21,9 @@ class AppDetail(Base):
     header_image = Column(String)
     website = Column(String)
 
-    pc_requirements_json = Column(JSON)
-    mac_requirements_json = Column(JSON)
-    linux_requirements_json = Column(JSON)
+    pc_requirements = Column(JSON)
+    mac_requirements = Column(JSON)
+    linux_requirements = Column(JSON)
 
     developers = Column(JSON)
     publishers = Column(JSON)

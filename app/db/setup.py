@@ -14,7 +14,7 @@ db_path = os.path.join(base_path, db_name)
 DATABASE_URL = f"duckdb:///{db_path}"
 engine = create_engine(DATABASE_URL)
 Base = declarative_base()
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=True, bind=engine)
 
 
 
@@ -24,4 +24,5 @@ def get_db():
         yield db
     finally:
         db.close()
+
 
