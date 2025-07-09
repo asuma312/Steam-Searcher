@@ -11,10 +11,9 @@ from app.utils.logger import logger
 from tqdm import tqdm
 import os
 
-db_path = r"C:\Users\Lucas\Documents\GitHub\Steam-Searcher\app\db\db_files\parquet_files"
 db_path = os.path.join(
     os.path.dirname(__file__),
-    '..', 'db', 'db_files', 'parquet_files'
+    '..', 'db', 'db_files', 'bronze'
 )
 ids_path = os.path.join(db_path, 'ids')
 details_path = os.path.join(db_path, 'details')
