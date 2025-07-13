@@ -169,6 +169,7 @@ SELECT
         about_the_game,
         short_description,
         supported_languages,
+        header_image AS image,
         pc_requirements.recommended AS windows_req_rec,
         pc_requirements.minimum AS windows_req_min,
         mac_requirements.recommended AS mac_req_rec,

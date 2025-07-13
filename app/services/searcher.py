@@ -17,7 +17,7 @@ def do_query_search(query: str):
                 WHEN det.price is NULL THEN 0
                 ELSE det.price/100
             END AS price,
-            'https://images.pexels.com/photos/735911/pexels-photo-735911.jpeg?auto=compress&cs=tinysrgb&w=400&h=225' AS image,
+            image,
             CONCAT(
                 'https://store.steampowered.com/app/',
                 det.id
@@ -31,7 +31,7 @@ def do_query_search(query: str):
             INNER JOIN {table_name} AS det
             ON emb.id = det.id
             ORDER BY array_distance(embedding, array{embeddings.embed_query(query)}::FLOAT[{model_size}])
-            LIMIT 2
+            LIMIT 20
             """
         ).df()
     return df

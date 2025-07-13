@@ -160,7 +160,7 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
 
       {/* System Requirements Hover Overlay */}
       {showDetails && (
-        <div className="absolute inset-0 bg-gray-900/95 backdrop-blur-sm transition-all duration-300 overflow-y-auto z-20">
+        <div className="absolute inset-0 bg-gray-900/95 transition-all duration-300 overflow-y-auto z-20">
         <div className="p-6 min-h-full flex flex-col">
           <div className="flex items-center justify-between mb-4">
             <h4 className="text-xl font-bold text-white flex items-center">
@@ -261,22 +261,6 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
             </div>
           )}
 
-          {/* Steam Button Inside Overlay */}
-          <div className="mt-6 pt-4 border-t border-gray-700">
-            <a
-              href={game.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center justify-center w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
-            >
-              View on Steam
-              <ExternalLink className="w-4 h-4 ml-2" />
-            </a>
-            <p className="text-gray-400 text-xs text-center mt-2">
-              Clique no X ou fora da área para fechar
-            </p>
-          </div>
         </div>
         </div>
       )}
