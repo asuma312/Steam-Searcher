@@ -2,24 +2,20 @@ import asyncio
 import threading
 from typing import List, Coroutine
 import pandas as pd
-
+import duckdb
 import uuid
 from app.models.crawlers import AppIdResponse as CrawlerAppIdResponse, AppDetailResponse as CrawlerAppDetailResponse, \
     AppDetail as AppDetailModel
 from app.crawlers.steam import Crawler
 from app.utils.logger import logger
 from tqdm import tqdm
+from app.db import db_path,base_path, bronze_path, silver_path
+from app.db.setup import engine
+engine.dispose()
 import os
+import kagglehub
 
-db_path = os.path.join(
-    os.path.dirname(__file__),
-    '..', 'db', 'db_files', 'bronze'
-)
-ids_path = os.path.join(db_path, 'ids')
-details_path = os.path.join(db_path, 'details')
-
-os.makedirs(ids_path, exist_ok=True)
-os.makedirs(details_path, exist_ok=True)
+ids_path = os.path.join(base_path,'bronze', 'ids')
 
 
 async def update_app_id():
@@ -53,7 +49,7 @@ def do_batch_insert(details_to_add: List[AppDetailModel]):
         df = pd.DataFrame(data_dicts)
 
         filename = f"{uuid.uuid4()}.parquet"
-        output_file = os.path.join(details_path, filename)
+        output_file = os.path.join(bronze_path, filename)
 
         df.to_parquet(output_file, index=False)
         logger.info(
@@ -118,7 +114,6 @@ async def fetch_and_prepare_detail(app_id: int, crawler: Crawler, semaphore: asy
 
         return app_detail_response.data
 
-
 async def generate_details_for_chunk(app_ids_chunk: List[int], progress_bar: tqdm, async_concurrency: int):
     crawler = Crawler()
     semaphore = asyncio.Semaphore(async_concurrency)
@@ -155,13 +150,13 @@ async def update_app_id_details(num_threads=5, batch_size=200, async_concurrency
         all_ids = set(all_ids_df['app_id'].unique())
 
         processed_ids = set()
-        for file in os.listdir(details_path):
-            file_path = os.path.join(details_path, file)
+        for file in os.listdir(bronze_path):
+            file_path = os.path.join(bronze_path, file)
             if os.path.getsize(file_path) == 0:
                 logger.error(f"File {file} has no content. Deleting.")
                 os.remove(file_path)
-        if os.path.exists(details_path) and len(os.listdir(details_path)) > 0:
-            processed_df = pd.read_parquet(details_path, columns=['steam_appid'])
+        if os.path.exists(bronze_path) and len(os.listdir(bronze_path)) > 0:
+            processed_df = pd.read_parquet(bronze_path, columns=['steam_appid'])
             processed_ids = set(processed_df['steam_appid'].unique())
 
         app_ids_to_fetch = list(all_ids - processed_ids)
@@ -200,7 +195,7 @@ async def update_app_id_details(num_threads=5, batch_size=200, async_concurrency
         return True
 
 
-async def main():
+async def steam_main():
     await update_app_id()
     while True:
         is_done = await update_app_id_details(num_threads=6, batch_size=300, async_concurrency_per_thread=6)
@@ -211,5 +206,9 @@ async def main():
     logger.info("All app details are up-to-date. Process finished.")
 
 
+
 if __name__ == "__main__":
-    asyncio.run(main())
+    #asyncio.run(steam_main())
+    #TODO GPU CPU dataset
+    #setup_gpu_dataset()
+    pass
