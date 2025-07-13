@@ -145,7 +145,6 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
         )}
 
         {/* Action Button */}
-        {!showDetails && (
         <div className="pt-4 border-t border-gray-700">
           <a
             href={game.link}
@@ -157,13 +156,11 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
             <ExternalLink className="w-4 h-4 ml-2" />
           </a>
         </div>
-        )}
       </div>
 
       {/* System Requirements Hover Overlay */}
       {showDetails && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm transition-all duration-300 overflow-y-auto z-50 flex items-center justify-center p-4">
-        <div className="bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="absolute inset-0 bg-gray-900/95 backdrop-blur-sm transition-all duration-300 overflow-y-auto z-20">
         <div className="p-6 min-h-full flex flex-col">
           <div className="flex items-center justify-between mb-4">
             <h4 className="text-xl font-bold text-white flex items-center">
@@ -175,7 +172,7 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
                 e.stopPropagation();
                 setShowDetails(false);
               }}
-              className="text-gray-400 hover:text-white transition-colors text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-700"
+              className="text-gray-400 hover:text-white transition-colors text-xl font-bold"
             >
               ×
             </button>
@@ -276,8 +273,10 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
               View on Steam
               <ExternalLink className="w-4 h-4 ml-2" />
             </a>
+            <p className="text-gray-400 text-xs text-center mt-2">
+              Clique no X ou fora da área para fechar
+            </p>
           </div>
-        </div>
         </div>
         </div>
       )}
