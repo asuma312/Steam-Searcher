@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { ArrowLeft, Search, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Search } from 'lucide-react';
 import GameCard from '../components/GameCard';
 import { GameData } from '../types/Game';
 
@@ -8,14 +8,38 @@ const ResultsPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [games, setGames] = useState<GameData[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Extract all parameters from the URL
   const query = searchParams.get('q') || '';
+  const genres = searchParams.get('genre')?.split(',') || [];
+  const categories = searchParams.get('category')?.split(',') || [];
+  const price_start = searchParams.get('price_start');
+  const price_end = searchParams.get('price_end');
+
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  console.log(backendUrl);
 
   useEffect(() => {
     const fetchGames = async () => {
       setLoading(true);
 
+      const searchBody: {
+        query: string;
+        genre: string[];
+        category: string[];
+        price_start?: number;
+        price_end?: number;
+      } = {
+        query: query,
+        genre: genres.filter(Boolean), // Remove empty strings
+        category: categories.filter(Boolean), // Remove empty strings
+      };
+
+      if (price_start) {
+        searchBody.price_start = parseFloat(price_start);
+      }
+      if (price_end) {
+        searchBody.price_end = parseFloat(price_end);
+      }
 
       const response = await fetch(
           `${backendUrl}/api/search`,
@@ -24,7 +48,7 @@ const ResultsPage: React.FC = () => {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({query}),
+            body: JSON.stringify(searchBody),
           }
       );
 
@@ -32,10 +56,8 @@ const ResultsPage: React.FC = () => {
       setGames(fetchedGamesData);
       setLoading(false);
     }
-    if (query) {
-      fetchGames();
-    }
-  }, [query]);
+    fetchGames();
+  }, [searchParams, backendUrl]); // Depend on searchParams to refetch when URL changes
 
   if (loading) {
     return (
@@ -47,6 +69,8 @@ const ResultsPage: React.FC = () => {
       </div>
     );
   }
+
+  const displayQuery = query || [...genres, ...categories].join(', ') || 'All Games';
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -68,7 +92,7 @@ const ResultsPage: React.FC = () => {
 
             <div className="flex items-center space-x-2 text-gray-300">
               <Search className="w-5 h-5" />
-              <span className="font-medium">"{query}"</span>
+              <span className="font-medium truncate" title={displayQuery}>"{displayQuery}"</span>
               <span className="text-gray-500">({games.length} results)</span>
             </div>
           </div>
@@ -79,7 +103,7 @@ const ResultsPage: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 py-8">
         {games.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-gray-400 text-xl">No games found for "{query}"</p>
+            <p className="text-gray-400 text-xl">No games found for your criteria</p>
             <Link
               to="/"
               className="inline-block mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"

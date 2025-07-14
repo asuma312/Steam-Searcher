@@ -1,10 +1,11 @@
-/app/db/db_filex
 .env
 /.venv
 /instance
 .idea/
 *.pyc
-/app/db/db_files
+*.parquet
+*.duckdb
+*.duckdb.wal
 logs
 *.log
 npm-debug.log*

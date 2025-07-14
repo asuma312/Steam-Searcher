@@ -208,7 +208,7 @@ async def steam_main():
 
 
 if __name__ == "__main__":
-    #asyncio.run(steam_main())
+    asyncio.run(steam_main())
     #TODO GPU CPU dataset
     #setup_gpu_dataset()
     pass

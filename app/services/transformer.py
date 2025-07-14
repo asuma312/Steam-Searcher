@@ -6,17 +6,21 @@ import os
 import duckdb
 from bs4 import BeautifulSoup
 from rapidfuzz import fuzz
+import unidecode
 import swifter
 import time
-from app.db import db_path, bronze_path, silver_path
+from app.db import db_path, bronze_path, silver_path, base_path
 from app.db.setup import engine
-engine.dispose()
+import json
 from uuid import uuid4
-
-os.makedirs(silver_path, exist_ok=True)
+engine.dispose()
 
 requirements_keys = set()
-
+#i used proxies to get the data, so the languages is a mess, its kinda expensive(in time) to get the data again with fixed proxies so i will just do this fix
+with open(os.path.join(base_path, 'gold', 'categories_fix.json'), 'r', encoding='utf-8') as f:
+  _category_fix = json.load(f)
+with open(os.path.join(base_path, 'gold', 'genres_fix.json'), 'r', encoding='utf-8') as f:
+  _genre_fix = json.load(f)
 
 def update_and_padronize_keys(key, threshold=90):
     key = key.strip().lower()
@@ -150,6 +154,30 @@ def generate_gold():
             else:
                 l_min_parsed_atributes['extra'] += attr.text.strip() + ' '
         row['lin_req_min'] = l_min_parsed_atributes
+        new_categorias = []
+        for categoria in row['categories']:
+            #normaliza só tirando carcateres bugdos
+
+            categoria = categoria.replace('"',"")
+            fixed_categoria = next((item for item in _category_fix if categoria == list(item.keys())[0]), None)
+            if not fixed_categoria:
+                print(f"Categoria '{categoria}' não encontrada na lista de correções.")
+                continue
+            categoria = list(fixed_categoria.values())[0]
+            new_categorias.append(categoria)
+        row['categories'] = new_categorias
+
+        new_genres = []
+        for genre in row['genres']:
+            #normaliza só tirando carcateres bugdos
+            genre = genre.replace('"',"")
+            fixed_genre = next((item for item in _genre_fix if genre == list(item.keys())[0]), None)
+            if not fixed_genre:
+                print(f"Gênero '{genre}' não encontrado na lista de correções.")
+                continue
+            genre = list(fixed_genre.values())[0]
+            new_genres.append(genre)
+        row['genres'] = new_genres
         return row
 
 

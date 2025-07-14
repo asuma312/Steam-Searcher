@@ -1,85 +1,84 @@
 # 🎮 SteamSearcher - Steam Game Explorer & Recommender
 
-Um sistema inteligente de busca e recomendação de jogos Steam que utiliza **Processamento de Linguagem Natural (NLP)** e **Retrieval-Augmented Generation (RAG)** para descobrir jogos baseado em descrições em linguagem natural.
+An intelligent Steam game search and recommendation system that uses **Natural Language Processing (NLP)** and **Retrieval-Augmented Generation (RAG)** to discover games based on natural language descriptions.
 
 ---
 
-## 🔧 Principais Funcionalidades
+## 🔧 Key Features
 
-- 🔍 **Coleta de Dados Steam**: Obtém informações detalhadas sobre jogos disponíveis na plataforma Steam
-- 🗃️ **Armazenamento DuckDB**: Armazena os dados coletados de forma eficiente localmente
-- 🤖 **Sistema de Recomendação RAG**: Usa embeddings e LLMs para sugerir jogos baseado em descrições fornecidas pelo usuário
-- 💬 **Interface em Linguagem Natural**: Permite buscar jogos com prompts como: "Quero um jogo de estratégia medieval com elementos de RPG"
-- 🎨 **Interface Web Moderna**: Frontend React com design responsivo e experiência de usuário intuitiva
-- ⚡ **API REST**: Backend Flask para comunicação entre frontend e sistema de busca
+- 🔍 **Steam Data Collection**: Gathers detailed information about games available on the Steam platform.
+- 🗃️ **DuckDB Storage**: Efficiently stores the collected data locally.
+- 🤖 **RAG Recommendation System**: Uses embeddings and LLMs to suggest games based on user-provided descriptions.
+- 💬 **Natural Language Interface**: Allows searching for games with prompts like: "I want a medieval strategy game with RPG elements."
+- 🎨 **Modern Web Interface**: React frontend with a responsive design and intuitive user experience.
+- ⚡ **REST API**: Flask backend for communication between the frontend and the search system.
 
 ---
 
-## 🏗️ Arquitetura
+## 🏗️ Architecture
 
 ### Backend (Python/Flask)
-- **Crawlers**: Coleta dados da API Steam
-- **Processamento**: Transforma e limpa os dados coletados
-- **Embeddings**: Gera embeddings usando OpenAI para busca semântica
-- **API**: Endpoints REST para busca de jogos
+- **Crawlers**: Collects data from the Steam API.
+- **Processing**: Transforms and cleans the collected data.
+- **Embeddings**: Generates embeddings using OpenAI for semantic search.
+- **API**: REST endpoints for game searches.
 
 ### Frontend (React/TypeScript)
-- **Interface de Busca**: Página principal com campo de busca intuitivo
-- **Resultados**: Exibição de jogos com informações detalhadas
-- **Design Responsivo**: Funciona perfeitamente em desktop e mobile
+- **Search Interface**: Main page with an intuitive search field.
+- **Results**: Displays games with detailed information.
+- **Responsive Design**: Works perfectly on desktop and mobile.
 
-### Banco de Dados
-- **DuckDB**: Armazenamento local eficiente
-- **Embeddings**: Busca vetorial para recomendações semânticas
+### Database
+- **DuckDB**: Efficient local storage.
+- **Embeddings**: Vector search for semantic recommendations.
 
 ---
 
-## 📦 Pré-requisitos
+## 📦 Prerequisites
 
 - Python `3.7+`
 - Node.js `16+`
-- Chave da API OpenAI (para embeddings)
+- OpenAI API Key (for embeddings)
 
 ---
 
-## 🚀 Instalação
+## 🚀 Installation
 
-### 1. Clone o repositório
+### 1. Clone the repository
 
 ```bash
 git clone <your_repository_url>
 cd steam-game-explorer-recommender
 ```
 
-### 2. Configure o Backend
+### 2. Configure the Backend
 
 ```bash
-# Crie e ative um ambiente virtual
+# Create and activate a virtual environment
 python -m venv venv
-source venv/bin/activate  # No Windows: venv\Scripts\activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Instale as dependências
-pip install -r requirements.txt
-```
+# Install dependencies
+pip install -r requirements.txt```
 
-### 3. Configure as Variáveis de Ambiente
+### 3. Configure Environment Variables
 
-Crie um arquivo `.env` na raiz do projeto:
+Create a `.env` file in the project root:
 
 ```env
-OPENAI_API_KEY=sua_chave_openai_aqui
-PROXY=seu_proxy_se_necessario
-PROXY_AUTH=auth_do_proxy_se_necessario
+OPENAI_API_KEY=your_openai_key_here
+PROXY=your_proxy_if_needed
+PROXY_AUTH=proxy_auth_if_needed
 ```
 
-### 4. Configure o Frontend
+### 4. Configure the Frontend
 
 ```bash
 cd app/frontend
 npm install
 ```
 
-Crie um arquivo `.env` em `app/frontend`:
+Create a `.env` file in `app/frontend`:
 
 ```env
 VITE_BACKEND_URL=http://localhost:5000
@@ -87,92 +86,92 @@ VITE_BACKEND_URL=http://localhost:5000
 
 ---
 
-## ⚙️ Uso
+## ⚙️ Usage
 
-### 1. Colete e processe dados do Steam
+### 1. Collect and process Steam data
 
 ```bash
-# Colete dados dos jogos
+# Collect game data
 python app/services/routines.py
 
-# Processe e transforme os dados
+# Process and transform the data
 python app/services/transformer.py
 
-# Gere embeddings para busca semântica
+# Generate embeddings for semantic search
 python app/services/embedder.py
 ```
 
-Este processo irá:
-- Coletar informações de jogos do Steam
-- Processar e limpar os dados
-- Salvar no banco DuckDB (`app/db/db_files/steam-searcher.duckdb`)
-- Gerar embeddings para busca semântica
+This process will:
+- Collect game information from Steam
+- Process and clean the data
+- Save to the DuckDB database (`app/db/db_files/steam-searcher.duckdb`)
+- Generate embeddings for semantic search
 
-### 2. Inicie o Backend
+### 2. Start the Backend
 
 ```bash
 python run.py
 ```
 
-O servidor Flask estará rodando em `http://localhost:5000`
+The Flask server will be running at `http://localhost:5000`
 
-### 3. Inicie o Frontend
+### 3. Start the Frontend
 
 ```bash
 cd app/frontend
 npm run dev
 ```
 
-A aplicação web estará disponível em `http://localhost:5173`
+The web application will be available at `http://localhost:5173`
 
-### 4. Use a Aplicação
+### 4. Use the Application
 
-1. Acesse `http://localhost:5173`
-2. Digite sua busca em linguagem natural, como:
-   - "Jogos de estratégia medieval com elementos RPG"
-   - "Jogos de corrida arcade divertidos"
-   - "RPGs com mundo aberto e crafting"
-3. Veja os resultados com informações detalhadas dos jogos
+1. Access `http://localhost:5173`
+2. Type your search in natural language, such as:
+   - "Medieval strategy games with RPG elements"
+   - "Fun arcade racing games"
+   - "RPGs with open world and crafting"
+3. See the results with detailed information about the games.
 
 ---
 
-## 🎯 Exemplos de Busca
+## 🎯 Search Examples
 
-A aplicação entende buscas em linguagem natural:
+The application understands natural language searches:
 
 ```
-"Quero um jogo de estratégia medieval com elementos de RPG"
+"I want a medieval strategy game with RPG elements"
 ```
 
-Resultados esperados:
+Expected results:
 - Crusader Kings III
 - Mount & Blade II: Bannerlord
 - Total War: Medieval II
 
 ```
-"Jogos indie de plataforma com pixel art"
+"Indie platformer games with pixel art"
 ```
 
-Resultados esperados:
+Expected results:
 - Celeste
 - Hollow Knight
 - Dead Cells
 
 ---
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```
 ├── app/
-│   ├── crawlers/          # Coleta de dados Steam
-│   ├── db/               # Configuração banco de dados
-│   ├── frontend/         # Aplicação React
-│   ├── models/           # Modelos de dados
-│   ├── routes/           # Rotas da API
-│   ├── services/         # Lógica de negócio
-│   └── utils/            # Utilitários
-├── run.py               # Servidor Flask
-└── requirements.txt     # Dependências Python
+│   ├── crawlers/          # Steam data collection
+│   ├── db/               # Database configuration
+│   ├── frontend/         # React application
+│   ├── models/           # Data models
+│   ├── routes/           # API routes
+│   ├── services/         # Business logic
+│   └── utils/            # Utilities
+├── run.py               # Flask server
+└── requirements.txt     # Python dependencies
 ```
 
 ---
@@ -180,12 +179,11 @@ Resultados esperados:
 ## 🔧 API Endpoints
 
 ### POST `/api/search`
-Busca jogos baseado em query em linguagem natural.
+Searches for games based on a natural language query.
 
-**Request:**
-```json
+**Request:**```json
 {
-  "query": "jogos de estratégia medieval"
+  "query": "medieval strategy games"
 }
 ```
 
@@ -193,12 +191,12 @@ Busca jogos baseado em query em linguagem natural.
 ```json
 [
   {
-    "id": 428020,
+    "id": 1158310,
     "name": "Crusader Kings III",
     "description": "Paradox Development Studio brings you the sequel to one of the most popular strategy games ever made.",
     "price": 49.99,
-    "image": "https://cdn.akamai.steamstatic.com/steam/apps/428020/header.jpg",
-    "link": "https://store.steampowered.com/app/428020",
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/1158310/header.jpg",
+    "link": "https://store.steampowered.com/app/1158310",
     "pc_requirements": {...},
     "genres": ["Strategy", "Simulation"],
     "categories": ["Single-player", "Multi-player"]
@@ -208,39 +206,35 @@ Busca jogos baseado em query em linguagem natural.
 
 ---
 
-## 🤝 Contribuindo
+## 🤝 Contributing
 
-Contribuições são bem-vindas! Você pode:
+Contributions are welcome! You can:
 
-- Melhorar a coleta de dados Steam
-- Otimizar performance das consultas
-- Experimentar com diferentes modelos de embedding
-- Adicionar filtros (gênero, preço, etc.)
-- Melhorar a interface do usuário
-- Adicionar testes automatizados
+- Improve Steam data collection
+- Optimize query performance
+- Experiment with different embedding models
+- Add filters (genre, price, etc.)
+- Enhance the user interface
+- Add automated tests
 
-Envie um Pull Request com suas melhorias 🚀
-
----
-
-## 🔮 Próximas Funcionalidades
-
-- [ ] Filtros avançados (preço, gênero, avaliações)
-- [ ] Sistema de favoritos
-- [ ] Recomendações personalizadas baseadas no histórico
-- [ ] Integração com outras plataformas de jogos
-- [ ] Cache inteligente para melhor performance
-- [ ] Modo offline para buscas
+Submit a Pull Request with your improvements 🚀
 
 ---
 
-## 📄 Licença
+## 🔮 Upcoming Features
 
-Este projeto está licenciado sob a **Licença MIT**.
+- [ ] Advanced filters (price, genre, ratings)
+- [ ] Smart caching for better performance
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 🛠️ Technologies Used
 
 **Backend:**
 - Python 3.7+
@@ -257,7 +251,7 @@ Este projeto está licenciado sob a **Licença MIT**.
 - Vite
 - React Router
 
-**Infraestrutura:**
-- DuckDB (banco de dados)
+**Infrastructure:**
+- DuckDB (database)
 - OpenAI API (embeddings)
-- Steam API (dados dos jogos)
+- Steam API (game data)
