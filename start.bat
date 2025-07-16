@@ -2,6 +2,7 @@
 rem
 call .venv\Scripts\activate
 start "" python run.py
+start "" python kaggle_collector.py
 
 rem
 timeout /t 3 /nobreak

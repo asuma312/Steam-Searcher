@@ -1,11 +1,18 @@
 from flask import *
-from flask_cors import CORS
-from app.routes import api_bp
-from app.db import db_path
-import duckdb
+
+
+
+
 def create_app():
     app = Flask(__name__)
+    from flask_cors import CORS
+    from app.routes import api_bp
+    from app.db import db_path
+    import duckdb
     CORS(app)
+    from app.db.setup import engine, Base
+    from app.models.sql import AppDetail, AppId
+    Base.metadata.create_all(bind=engine)
     with duckdb.connect(db_path) as conn:
         # duckdb doesnt have materialized views
         conn.execute(

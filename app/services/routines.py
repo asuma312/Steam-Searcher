@@ -2,7 +2,6 @@ import asyncio
 import threading
 from typing import List, Coroutine
 import pandas as pd
-import duckdb
 import uuid
 from app.models.crawlers import AppIdResponse as CrawlerAppIdResponse, AppDetailResponse as CrawlerAppDetailResponse, \
     AppDetail as AppDetailModel
@@ -13,7 +12,6 @@ from app.db import db_path,base_path, bronze_path, silver_path
 from app.db.setup import engine
 engine.dispose()
 import os
-import kagglehub
 
 ids_path = os.path.join(base_path,'bronze', 'ids')
 

@@ -1,6 +1,5 @@
 import kagglehub
 from app.db import db_path
-from app.db.setup import engine
 import os
 import duckdb
 DATASET_URL = 'lucasbuenogodoy/steam-searcher-dataset'

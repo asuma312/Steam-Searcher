@@ -95,7 +95,7 @@ You can download the dataset in kaggle and create your own duckdb:
 
 Or you can run the specific Kaggle collector to create & update your db:
 ```bash
-python app/services/kaggle_collector.py
+python kaggle_collector.py
 ```
 
 ### 2. Start the Backend

@@ -1,5 +1,4 @@
 import pyarrow.dataset as ds
-import polars as pl
 import pyarrow.parquet as pq
 import pyarrow as pa
 import os
