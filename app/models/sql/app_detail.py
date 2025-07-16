@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 
 class AppDetail(Base):
-    __tablename__ = "app_details"
+    __tablename__ = "detail"
     steam_appid = Column(Integer, ForeignKey('app_id.app_id'), nullable=False, unique=True, autoincrement=False, primary_key=True)
     type = Column(String)
     name = Column(String)

@@ -90,22 +90,13 @@ VITE_BACKEND_URL=http://localhost:5000
 
 ### 1. Collect and process Steam data
 
+You can download the dataset in kaggle and create your own duckdb:
+[Steam Searcher Dataset](https://www.kaggle.com/datasets/lucasbuenogodoy/steam-searcher-dataset)
+
+Or you can run the specific Kaggle collector to create & update your db:
 ```bash
-# Collect game data
-python app/services/routines.py
-
-# Process and transform the data
-python app/services/transformer.py
-
-# Generate embeddings for semantic search
-python app/services/embedder.py
+python app/services/kaggle_collector.py
 ```
-
-This process will:
-- Collect game information from Steam
-- Process and clean the data
-- Save to the DuckDB database (`app/db/db_files/steam-searcher.duckdb`)
-- Generate embeddings for semantic search
 
 ### 2. Start the Backend
 
@@ -223,7 +214,7 @@ Submit a Pull Request with your improvements 🚀
 
 ## 🔮 Upcoming Features
 
-- [ ] Advanced filters (price, genre, ratings)
+- [X] Advanced filters (price, genre, ratings)
 - [ ] Smart caching for better performance
 
 ---
