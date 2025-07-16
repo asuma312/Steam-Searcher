@@ -19,44 +19,44 @@ const ResultsPage: React.FC = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
-    const fetchGames = async () => {
-      setLoading(true);
+  const fetchGames = async () => {
+    setLoading(true);
 
-      const searchBody: {
-        query: string;
-        genre: string[];
-        category: string[];
-        price_start?: number;
-        price_end?: number;
-      } = {
-        query: query,
-        genre: genres.filter(Boolean), // Remove empty strings
-        category: categories.filter(Boolean), // Remove empty strings
-      };
+    const searchBody: {
+      query: string;
+      genre: string[];
+      category: string[];
+      price_start?: number;
+      price_end?: number;
+    } = {
+      query: query,
+      genre: genres.filter(Boolean), // Remove empty strings
+      category: categories.filter(Boolean), // Remove empty strings
+    };
 
-      if (price_start) {
-        searchBody.price_start = parseFloat(price_start);
-      }
-      if (price_end) {
-        searchBody.price_end = parseFloat(price_end);
-      }
-
-      const response = await fetch(
-          `${backendUrl}/api/search`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(searchBody),
-          }
-      );
-
-      const fetchedGamesData = await response.json();
-      setGames(fetchedGamesData);
-      setLoading(false);
+    if (price_start) {
+      searchBody.price_start = parseFloat(price_start);
     }
-    fetchGames();
+    if (price_end) {
+      searchBody.price_end = parseFloat(price_end);
+    }
+
+    const response = await fetch(
+        `${backendUrl}/api/search`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(searchBody),
+        }
+    );
+
+    const fetchedGamesData = await response.json();
+    setGames(fetchedGamesData);
+    setLoading(false);
+  }
+  fetchGames();
   }, [searchParams, backendUrl]); // Depend on searchParams to refetch when URL changes
 
   if (loading) {
